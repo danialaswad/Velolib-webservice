@@ -11,6 +11,7 @@ namespace ServiceClient
     {
         static void Main(string[] args)
         {
+            //Test modif
             ItineraryServiceClient isc = new ItineraryServiceClient();
             string s=isc.getItinerary("21 Rue Saint-Séverin 75005", "1 rue Antoine Dubois");
             Console.WriteLine(s);
