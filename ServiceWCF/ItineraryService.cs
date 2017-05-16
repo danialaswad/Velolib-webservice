@@ -9,6 +9,8 @@ using System.ServiceModel;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 
 
@@ -18,15 +20,76 @@ namespace ServiceWCF
     {
         public string getItinerary(string origin, string destination)
         {
-            string itinerary = "";
+            string walk = "";
+            string cycle = "";
             string velibAddress = getVelib(origin);
-            itinerary += connectToMaps(origin, velibAddress, "walking");
-            itinerary += connectToMaps(velibAddress, destination, "bicycling");
+            walk += connectToMaps(origin, velibAddress, "walking");
+            cycle += connectToMaps(velibAddress, destination, "bicycling");
 
-            return itinerary;
+            dynamic jsonWalk = JsonConvert.DeserializeObject(walk);
+            dynamic jsonCycle = JsonConvert.DeserializeObject(cycle);
+
+            JObject jWalk = new JObject();
+            jWalk.Add("start", jsonWalk.routes[0].legs[0].start_address);
+            jWalk.Add("end", velibAddress);
+            jWalk.Add("distance", jsonWalk.routes[0].legs[0].distance);
+            jWalk.Add("duration", jsonWalk.routes[0].legs[0].duration);
+        
+            JObject jCycle = new JObject();
+            jCycle.Add("start", velibAddress);
+            jCycle.Add("end", jsonCycle.routes[0].legs[0].end_address);
+            jCycle.Add("distance", jsonCycle.routes[0].legs[0].distance);
+            jCycle.Add("duration", jsonCycle.routes[0].legs[0].duration);
+
+            JObject res = new JObject();
+
+            res.Add("start", jsonWalk.routes[0].legs[0].start_address);
+            res.Add("end", jsonCycle.routes[0].legs[0].end_address);
+            res.Add("distance", getDistance(jsonWalk, jsonCycle));
+            res.Add("duration", getDuration(jsonWalk, jsonCycle));
+            res.Add("walk", jWalk);
+            res.Add("cycle", jCycle);
+            return res.ToString();
            
             //return string.Format("You entered: {0}", value);
         }
+
+        static JObject getDuration(dynamic json1, dynamic json2)
+        {
+
+            int durationWalk = json1.routes[0].legs[0].duration.value;
+            int durationCycle = json2.routes[0].legs[0].duration.value;
+
+            int hour = (durationCycle + durationWalk) / 3600;
+            int min = ((durationCycle + durationWalk) / 60) - (hour * 60);
+
+            JObject json = new JObject();
+
+            json.Add("text", hour + " hour(s) " + min + " min(s)");
+            json.Add("value", durationCycle + durationWalk);
+
+            return json;
+        }
+
+        static JObject getDistance(dynamic json1, dynamic json2)
+        {
+            int distanceWalk = json1.routes[0].legs[0].distance.value;
+            int distanceCycle = json2.routes[0].legs[0].distance.value;
+
+            string distanceValue = (distanceCycle + distanceWalk).ToString();
+
+            string distanceText = (((float)distanceCycle + (float)distanceWalk) / 1000).ToString();
+
+            distanceText = distanceText.Substring(0, distanceText.Length - 2) + " km";
+
+            JObject json = new JObject();
+
+            json.Add("text", distanceText);
+            json.Add("value", distanceValue);
+
+            return json;
+        }
+        
 
         public static String connectToMaps(string origin, string destination, string mode)
         {
