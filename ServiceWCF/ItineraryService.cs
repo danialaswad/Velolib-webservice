@@ -20,20 +20,20 @@ namespace ServiceWCF
         {
             string itinerary = "";
             string velibAddress = getVelib(origin);
-            itinerary += connectToMaps(origin, velibAddress);
-            itinerary += connectToMaps(velibAddress, destination);
+            itinerary += connectToMaps(origin, velibAddress, "walking");
+            itinerary += connectToMaps(velibAddress, destination, "bicycling");
 
             return itinerary;
            
             //return string.Format("You entered: {0}", value);
         }
 
-        public static String connectToMaps(string origin, string destination)
+        public static String connectToMaps(string origin, string destination, string mode)
         {
             string apiKey = "AIzaSyA-1i10h9yGuytFsM8uQN9kzfq-NaYVsHU";
             destination = destination.Replace(' ', '+');
             origin = origin.Replace(' ', '+');
-            WebRequest request = WebRequest.Create("https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination=" + destination + "&key=" + apiKey);
+            WebRequest request = WebRequest.Create("https://maps.googleapis.com/maps/api/directions/json?origin="+origin+"&destination=" + destination + "&mode="+mode + "&key=" + apiKey);
 
             // Get Response from the Service 
             WebResponse response = request.GetResponse();
@@ -50,14 +50,43 @@ namespace ServiceWCF
         static string parsePostalCode(string address)
         {
             Match match=Regex.Match(address, "(.*)([0-9][0-9][0-9][0-9][0-9])(.*)");
-            Debug.WriteLine(match.Groups[2].Value);
             return match.Groups[2].Value;
         }
+
+        //Calcul distance entre origin et un point velib
+
+        static int getDistance(string origin, string velibAddress)
+        {
+            string apiKey = "AIzaSyCMl0p5Kfa992OF5n0B89hL8l9KU-LUAQg";
+            WebRequest request = WebRequest.Create("https://maps.googleapis.com/maps/api/distancematrix/xml?units=metric&origins=" + origin + "&destinations=" + velibAddress + "&key=" + apiKey);
+            // Get Response from the Service 
+            WebResponse response = request.GetResponse();
+
+            // Get the stream containing content returned by the server.
+            Stream dataStream = response.GetResponseStream();
+
+            // Open the stream using a StreamReader for easy access and put it into a string
+            StreamReader reader = new StreamReader(dataStream); // Read the content.
+            string responseFromServer = reader.ReadToEnd(); // Put it in a String 
+            XmlDocument xdoc = new XmlDocument();
+            xdoc.LoadXml(responseFromServer);
+
+            XmlNodeList elemList = xdoc.GetElementsByTagName("duration");
+            XmlNode node = xdoc.SelectSingleNode("//rows/elements/duration/value/text()");
+            
+            int distance = 0;
+            int.TryParse(elemList[0].SelectSingleNode("value").InnerText, out distance);
+
+            return distance;
+        }
+
+        
 
 
         static String getVelib(string origin)
         {
-            string strresp = "";
+            int shortestDistance = -1;
+            string velibAddress = "";
             string postalCode = parsePostalCode(origin);
             // Create a request for the URL.
             WebRequest request = WebRequest.Create("http://www.velib.paris/service/carto");
@@ -87,7 +116,20 @@ namespace ServiceWCF
                 
                     if (elemList[i].Attributes["fullAddress"].Value.Contains(postalCode))
                     {
-                        return elemList[i].Attributes["fullAddress"].Value;
+                        //On calcule la distance avec les velibs pour trouver le velib le plus proche
+                        try
+                        {
+                            if (shortestDistance == -1 || shortestDistance > getDistance(origin, elemList[i].Attributes["fullAddress"].Value))
+                            {
+                                velibAddress = elemList[i].Attributes["fullAddress"].Value;
+                                shortestDistance = getDistance(origin, elemList[i].Attributes["fullAddress"].Value);
+                            }
+                        }
+                        catch(NullReferenceException e)
+                        {
+                        
+                        }
+                            
                         /* POUR PLUS TARD
                         //Get the number of the Station 
                         String numPoint = elemList[i].Attributes["number"].Value;
@@ -126,8 +168,7 @@ namespace ServiceWCF
             // Clean up the streams and the response.
             reader.Close();
             response.Close();
-
-            return strresp;
+            return velibAddress;
         }
 
        
