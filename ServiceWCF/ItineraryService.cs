@@ -91,7 +91,7 @@ namespace ServiceWCF
         }
         
 
-        public static String connectToMaps(string origin, string destination, string mode)
+        public static string connectToMaps(string origin, string destination, string mode)
         {
             string apiKey = "AIzaSyA-1i10h9yGuytFsM8uQN9kzfq-NaYVsHU";
             destination = destination.Replace(' ', '+');
@@ -116,12 +116,12 @@ namespace ServiceWCF
             return match.Groups[2].Value;
         }
 
-        //Calcul distance entre origin et un point velib
+        //Calcul durée trajet entre origin et un point velib
 
-        static int getDistance(string origin, string velibAddress)
+        static int getTimeToTravel(string origin, string velibAddress)
         {
             string apiKey = "AIzaSyCMl0p5Kfa992OF5n0B89hL8l9KU-LUAQg";
-            WebRequest request = WebRequest.Create("https://maps.googleapis.com/maps/api/distancematrix/xml?units=metric&origins=" + origin + "&destinations=" + velibAddress + "&key=" + apiKey);
+            WebRequest request = WebRequest.Create("https://maps.googleapis.com/maps/api/distancematrix/xml?units=metric&origins=" + origin + "&destinations=" + velibAddress + "&mode=bicycling&key=" + apiKey);
             // Get Response from the Service 
             WebResponse response = request.GetResponse();
 
@@ -135,12 +135,11 @@ namespace ServiceWCF
             xdoc.LoadXml(responseFromServer);
 
             XmlNodeList elemList = xdoc.GetElementsByTagName("duration");
-            XmlNode node = xdoc.SelectSingleNode("//rows/elements/duration/value/text()");
             
-            int distance = 0;
-            int.TryParse(elemList[0].SelectSingleNode("value").InnerText, out distance);
+            int time = 0;
+            int.TryParse(elemList[0].SelectSingleNode("value").InnerText, out time);
 
-            return distance;
+            return time;
         }
 
         
@@ -184,7 +183,7 @@ namespace ServiceWCF
                         //On calcule la distance avec les velibs pour trouver le velib le plus proche
                         try
                         {
-                            int newDistance = getDistance(origin, elemList[i].Attributes["fullAddress"].Value);
+                            int newDistance = getTimeToTravel(origin, elemList[i].Attributes["fullAddress"].Value);
                             if (shortestDistance == -1 || shortestDistance > newDistance)
                             {
                                 //On récupère le nombre de vélos dispos
@@ -227,35 +226,7 @@ namespace ServiceWCF
                         {
                         
                         }
-                            
-                        /* POUR PLUS TARD
-                        //Get the number of the Station 
-                        String numPoint = elemList[i].Attributes["number"].Value;
-
-                        // Create a request for the URL.
-                        WebRequest request_for_data = WebRequest.Create("http://www.velib.paris/service/stationdetails/" + numPoint);
-
-                        // Get Response 
-                        WebResponse response_for_data = request_for_data.GetResponse();
-
-                        // Open the stream using a StreamReader for easy access and put it into a string
-                        Stream dataStream_for_data = response_for_data.GetResponseStream();
-                        StreamReader reader_for_data = new StreamReader(dataStream_for_data); // Read the content.
-                        string responseFromServer_for_data = reader_for_data.ReadToEnd(); // Put it in a String
-
-                        // Parse the response and put the entries in XmlNodeList 
-                        XmlDocument doc_for_data = new XmlDocument();
-                        doc_for_data.LoadXml(responseFromServer_for_data);
-                        XmlNodeList elemList_for_data = doc_for_data.GetElementsByTagName("available");
-
-                        // Display the result 
-
-                        strresp += elemList_for_data[0].FirstChild.Value;
-                        strresp += " bikes are available ";
-                        strresp += "at " + elemList[i].Attributes["name"].Value;
-                        reader_for_data.Close();
-                        response_for_data.Close();
-                        */
+                   
                     }
                 }
                 catch (ArgumentException e)
