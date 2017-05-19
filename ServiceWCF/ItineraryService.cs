@@ -45,8 +45,8 @@ namespace ServiceWCF
 
             res.Add("start", jsonWalk.routes[0].legs[0].start_address);
             res.Add("end", jsonCycle.routes[0].legs[0].end_address);
-            res.Add("distance", getDistance(jsonWalk, jsonCycle));
-            res.Add("duration", getDuration(jsonWalk, jsonCycle));
+            res.Add("distance", getTotalDistance(jsonWalk, jsonCycle));
+            res.Add("duration", getTotalDuration(jsonWalk, jsonCycle));
             res.Add("walk", jWalk);
             res.Add("cycle", jCycle);
             return res.ToString();
@@ -54,7 +54,7 @@ namespace ServiceWCF
             //return string.Format("You entered: {0}", value);
         }
 
-        static JObject getDuration(dynamic json1, dynamic json2)
+        static JObject getTotalDuration(dynamic json1, dynamic json2)
         {
 
             int durationWalk = json1.routes[0].legs[0].duration.value;
@@ -71,7 +71,7 @@ namespace ServiceWCF
             return json;
         }
 
-        static JObject getDistance(dynamic json1, dynamic json2)
+        static JObject getTotalDistance(dynamic json1, dynamic json2)
         {
             int distanceWalk = json1.routes[0].legs[0].distance.value;
             int distanceCycle = json2.routes[0].legs[0].distance.value;

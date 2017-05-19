@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ClientWAF.ItineraryService;
+using Newtonsoft.Json.Linq;
+using Newtonsoft.Json;
 
 namespace ClientWAF
 {
@@ -26,9 +28,58 @@ namespace ClientWAF
             String src = textBox1.Text;
             String dest = textBox2.Text;
 
-            String res = ics.getItinerary("21 Rue Saint-Séverin, 75005 Paris", "1 Rue Antoine Dubois, 75006 Paris");
+            String res = ics.getItinerary(textBox1.Text,textBox2.Text);
 
-            richTextBox1.Text = res;
+            response_processor(res);
+            //walkStart.Text = res;
+            //walkStart.Visible = true;
+        }
+
+
+        private void response_processor(string s)
+        {
+            dynamic json = JsonConvert.DeserializeObject(s);
+            
+            walkStart.Text = json.walk.start;
+            walkStart.Visible = true;
+            walkEnd.Text = json.walk.end;
+            walkEnd.Visible = true;
+            walkDuration.Text = json.walk.duration.text;
+            walkDuration.Visible = true;
+            walkDistance.Text = json.walk.distance.text;
+            walkDistance.Visible = true;
+
+            cycleStart.Text = json.cycle.start;
+            cycleStart.Visible = true;
+            cycleEnd.Text = json.cycle.end;
+            cycleEnd.Visible = true;
+            cycleDistance.Text = json.cycle.distance.text;
+            cycleDistance.Visible = true;
+            cycleDuration.Text = json.cycle.duration.text;
+            cycleDuration.Visible = true;
+
+            walkPicture.Visible = true;
+            cyclePicture.Visible = true;
+        }
+
+        private void process1_Exited(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void richTextBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
