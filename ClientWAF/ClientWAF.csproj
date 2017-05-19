@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Connected Services\ItineraryService\Reference.cs">
+    <Compile Include="Connected Services\VelibService\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
@@ -75,11 +75,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Connected Services\ItineraryService\service.wsdl" />
-    <None Include="Connected Services\ItineraryService\service.xsd">
+    <None Include="Connected Services\VelibService\service.wsdl" />
+    <None Include="Connected Services\VelibService\service.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\ItineraryService\service1.xsd">
+    <None Include="Connected Services\VelibService\service1.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
@@ -100,16 +100,16 @@
     <WCFMetadata Include="Connected Services\" />
   </ItemGroup>
   <ItemGroup>
-    <WCFMetadataStorage Include="Connected Services\ItineraryService\" />
+    <WCFMetadataStorage Include="Connected Services\VelibService\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ItineraryService\configuration91.svcinfo" />
+    <None Include="Connected Services\VelibService\configuration91.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ItineraryService\configuration.svcinfo" />
+    <None Include="Connected Services\VelibService\configuration.svcinfo" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Connected Services\ItineraryService\Reference.svcmap">
+    <None Include="Connected Services\VelibService\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
     </None>

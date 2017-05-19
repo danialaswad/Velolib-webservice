@@ -8,11 +8,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace ClientWAF.ItineraryService {
+namespace ClientWAF.VelibService {
     
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ItineraryService.IItineraryService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="VelibService.IItineraryService")]
     public interface IItineraryService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IItineraryService/getItinerary", ReplyAction="http://tempuri.org/IItineraryService/getItineraryResponse")]
@@ -23,12 +23,12 @@ namespace ClientWAF.ItineraryService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface IItineraryServiceChannel : ClientWAF.ItineraryService.IItineraryService, System.ServiceModel.IClientChannel {
+    public interface IItineraryServiceChannel : ClientWAF.VelibService.IItineraryService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class ItineraryServiceClient : System.ServiceModel.ClientBase<ClientWAF.ItineraryService.IItineraryService>, ClientWAF.ItineraryService.IItineraryService {
+    public partial class ItineraryServiceClient : System.ServiceModel.ClientBase<ClientWAF.VelibService.IItineraryService>, ClientWAF.VelibService.IItineraryService {
         
         public ItineraryServiceClient() {
         }

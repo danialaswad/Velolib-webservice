@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ClientWAF.ItineraryService;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using ClientWAF.VelibService;
 
 namespace ClientWAF
 {
@@ -20,7 +20,7 @@ namespace ClientWAF
         public Form1()
         {
             InitializeComponent();
-            ics = new ItineraryServiceClient();
+            ics = new ItineraryServiceClient("wsHttp");
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -28,7 +28,7 @@ namespace ClientWAF
             String src = textBox1.Text;
             String dest = textBox2.Text;
 
-            String res = ics.getItinerary(textBox1.Text,textBox2.Text);
+            String res = ics.getItinerary(src,dest);
 
             response_processor(res);
             //walkStart.Text = res;
