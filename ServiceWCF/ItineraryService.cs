@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using System.Net;
-using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Newtonsoft.Json.Linq;
@@ -22,9 +17,9 @@ namespace ServiceWCF
         {
             string walk = "";
             string cycle = "";
-            string velibAddress = getVelib(origin);
-            walk += connectToMaps(origin, velibAddress, "walking");
-            cycle += connectToMaps(velibAddress, destination, "bicycling");
+            string velibAddress = getClosestVelib(origin);
+            walk += getMapsDirections(origin, velibAddress, "walking");
+            cycle += getMapsDirections(velibAddress, destination, "bicycling");
 
             dynamic jsonWalk = JsonConvert.DeserializeObject(walk);
             dynamic jsonCycle = JsonConvert.DeserializeObject(cycle);
@@ -91,7 +86,7 @@ namespace ServiceWCF
         }
         
 
-        public static string connectToMaps(string origin, string destination, string mode)
+        public static string getMapsDirections(string origin, string destination, string mode)
         {
             string apiKey = "AIzaSyA-1i10h9yGuytFsM8uQN9kzfq-NaYVsHU";
             destination = destination.Replace(' ', '+');
@@ -107,8 +102,12 @@ namespace ServiceWCF
             // Open the stream using a StreamReader for easy access and put it into a string
             StreamReader reader = new StreamReader(dataStream); // Read the content.
             string responseFromServer = reader.ReadToEnd(); // Put it in a String 
+            reader.Close();
+            response.Close();
             return responseFromServer;
         }
+
+
 
         static string parsePostalCode(string address)
         {
@@ -139,13 +138,16 @@ namespace ServiceWCF
             int time = 0;
             int.TryParse(elemList[0].SelectSingleNode("value").InnerText, out time);
 
+            reader.Close();
+            response.Close();
+
             return time;
         }
 
         
 
 
-        static String getVelib(string origin)
+        static String getClosestVelib(string origin)
         {
             int shortestDistance = -1;
             string velibAddress = "";
