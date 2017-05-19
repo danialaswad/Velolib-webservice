@@ -11,7 +11,7 @@ namespace ServiceClient
     {
         static void Main(string[] args)
         {
-            ItineraryServiceClient isc = new ItineraryServiceClient();
+            ItineraryServiceClient isc = new ItineraryServiceClient("wsHttp");
             string s=isc.getItinerary("21 Rue Saint-Séverin 75005", "1 rue Antoine Dubois");
             Console.WriteLine(s);
             Console.ReadLine();
