@@ -28,7 +28,7 @@ namespace ClientWAF
             String src = textBox1.Text;
             String dest = textBox2.Text;
 
-            String res = ics.getItinerary(src,dest);
+            String res = ics.getItinerary(textBox1.Text, textBox2.Text);
 
             response_processor(res);
             //walkStart.Text = res;
@@ -44,18 +44,18 @@ namespace ClientWAF
             walkStart.Visible = true;
             walkEnd.Text = json.walk.end;
             walkEnd.Visible = true;
-            walkDuration.Text = json.walk.duration.text;
+            walkDuration.Text = "Duration : " + json.walk.duration.text;
             walkDuration.Visible = true;
-            walkDistance.Text = json.walk.distance.text;
+            walkDistance.Text = "Distance : " + json.walk.distance.text;
             walkDistance.Visible = true;
 
             cycleStart.Text = json.cycle.start;
             cycleStart.Visible = true;
             cycleEnd.Text = json.cycle.end;
             cycleEnd.Visible = true;
-            cycleDistance.Text = json.cycle.distance.text;
+            cycleDistance.Text = "Distance : " + json.cycle.distance.text;
             cycleDistance.Visible = true;
-            cycleDuration.Text = json.cycle.duration.text;
+            cycleDuration.Text = "Duration : " + json.cycle.duration.text;
             cycleDuration.Visible = true;
 
             walkPicture.Visible = true;
