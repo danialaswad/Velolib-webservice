@@ -1,4 +1,4 @@
-﻿using ServiceClient.ServiceReference1;
+﻿using ServiceClient.VelibServiceTCP;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace ServiceClient
     {
         static void Main(string[] args)
         {
-            ItineraryServiceClient isc = new ItineraryServiceClient("wsHttp");
+            ItineraryServiceClient isc = new ItineraryServiceClient("netTcp1");
             string s=isc.getItinerary("21 Rue Saint-Séverin 75005", "1 rue Antoine Dubois");
             Console.WriteLine(s);
             Console.ReadLine();

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="5586915d-d7dd-4f0b-a578-27aaf028d331" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a80a2dbb-1112-41d6-9633-63d7bdd3f221" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,13 +19,12 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="http://localhost:8733/ServiceWCF/ItineraryService/" Protocol="http" SourceId="1" />
+    <MetadataSource Address="net.tcp://localhost/ServiceWCF/ItineraryService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="item.disco" MetadataType="Disco" ID="7d7f43e1-64d3-4c9b-9011-32b5948532dc" SourceId="1" SourceUrl="http://localhost:8733/ServiceWCF/ItineraryService/?disco" />
-    <MetadataFile FileName="ItineraryService.wsdl" MetadataType="Wsdl" ID="71b0395e-2a18-41c8-9595-2fc5ffe0c77d" SourceId="1" SourceUrl="http://localhost:8733/ServiceWCF/ItineraryService/?wsdl" />
-    <MetadataFile FileName="item.xsd" MetadataType="Schema" ID="490c8ea0-891d-4259-991a-4761139c03d3" SourceId="1" SourceUrl="http://localhost:8733/ServiceWCF/ItineraryService/?xsd=xsd0" />
-    <MetadataFile FileName="item1.xsd" MetadataType="Schema" ID="0118fdf5-0ead-43d6-a6e0-d44e4c8880b5" SourceId="1" SourceUrl="http://localhost:8733/ServiceWCF/ItineraryService/?xsd=xsd1" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="8f48463b-e206-4279-94b5-a506b8277d96" SourceId="1" SourceUrl="net.tcp://localhost/ServiceWCF/ItineraryService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="b5473e7c-9419-4b86-9303-06c76cf9afb1" SourceId="1" SourceUrl="net.tcp://localhost/ServiceWCF/ItineraryService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="94b0983a-f0d4-4071-bd88-7e5b1fe3e62a" SourceId="1" SourceUrl="net.tcp://localhost/ServiceWCF/ItineraryService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
