@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceClient", "ServiceClient\ServiceClient.csproj", "{D6EAC084-BDBB-4E1E-A2E0-949E1003A3EA}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -11,6 +11,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServiceWCF", "ServiceWCF\ServiceWCF.csproj", "{2EA87D68-989A-44AD-9500-D8CD88EC5141}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientWAF", "ClientWAF\ClientWAF.csproj", "{DA94EBE4-73A2-4F21-BE7A-20EF46FA2718}"
+	ProjectSection(ProjectDependencies) = postProject
+		{2EA87D68-989A-44AD-9500-D8CD88EC5141} = {2EA87D68-989A-44AD-9500-D8CD88EC5141}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientWAFTcp", "ClientWAFTcp\ClientWAFTcp.csproj", "{FFA05444-3D62-49CD-8C5F-FD3006D78E33}"
 	ProjectSection(ProjectDependencies) = postProject
 		{2EA87D68-989A-44AD-9500-D8CD88EC5141} = {2EA87D68-989A-44AD-9500-D8CD88EC5141}
 	EndProjectSection
@@ -33,6 +38,10 @@ Global
 		{DA94EBE4-73A2-4F21-BE7A-20EF46FA2718}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA94EBE4-73A2-4F21-BE7A-20EF46FA2718}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA94EBE4-73A2-4F21-BE7A-20EF46FA2718}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFA05444-3D62-49CD-8C5F-FD3006D78E33}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFA05444-3D62-49CD-8C5F-FD3006D78E33}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFA05444-3D62-49CD-8C5F-FD3006D78E33}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFA05444-3D62-49CD-8C5F-FD3006D78E33}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
