@@ -47,10 +47,10 @@
             this.walkView = new System.Windows.Forms.ListView();
             this.Itinerary = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Distance = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.Duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.cycleView = new System.Windows.Forms.ListView();
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.Duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.cyclePicture)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkPicture)).BeginInit();
@@ -74,18 +74,16 @@
             this.cycleDuration.Size = new System.Drawing.Size(105, 24);
             this.cycleDuration.TabIndex = 46;
             this.cycleDuration.Text = "";
-            this.cycleDuration.Visible = false;
             // 
             // cyclePicture
             // 
             this.cyclePicture.Image = ((System.Drawing.Image)(resources.GetObject("cyclePicture.Image")));
-            this.cyclePicture.Location = new System.Drawing.Point(159, 415);
+            this.cyclePicture.Location = new System.Drawing.Point(159, 423);
             this.cyclePicture.Name = "cyclePicture";
             this.cyclePicture.Size = new System.Drawing.Size(36, 36);
             this.cyclePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.cyclePicture.TabIndex = 47;
             this.cyclePicture.TabStop = false;
-            this.cyclePicture.Visible = false;
             // 
             // cycleDistance
             // 
@@ -98,7 +96,6 @@
             this.cycleDistance.Size = new System.Drawing.Size(105, 24);
             this.cycleDistance.TabIndex = 45;
             this.cycleDistance.Text = "";
-            this.cycleDistance.Visible = false;
             // 
             // label1
             // 
@@ -121,7 +118,6 @@
             this.cycleEnd.Size = new System.Drawing.Size(300, 30);
             this.cycleEnd.TabIndex = 44;
             this.cycleEnd.Text = "";
-            this.cycleEnd.Visible = false;
             // 
             // label2
             // 
@@ -151,7 +147,6 @@
             this.cycleStart.Size = new System.Drawing.Size(300, 28);
             this.cycleStart.TabIndex = 43;
             this.cycleStart.Text = "";
-            this.cycleStart.Visible = false;
             // 
             // walkStart
             // 
@@ -164,7 +159,6 @@
             this.walkStart.Size = new System.Drawing.Size(300, 27);
             this.walkStart.TabIndex = 35;
             this.walkStart.Text = "";
-            this.walkStart.Visible = false;
             // 
             // walkDuration
             // 
@@ -177,7 +171,6 @@
             this.walkDuration.Size = new System.Drawing.Size(105, 24);
             this.walkDuration.TabIndex = 41;
             this.walkDuration.Text = "";
-            this.walkDuration.Visible = false;
             // 
             // walkPicture
             // 
@@ -188,7 +181,6 @@
             this.walkPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.walkPicture.TabIndex = 42;
             this.walkPicture.TabStop = false;
-            this.walkPicture.Visible = false;
             // 
             // walkDistance
             // 
@@ -201,7 +193,6 @@
             this.walkDistance.Size = new System.Drawing.Size(105, 23);
             this.walkDistance.TabIndex = 40;
             this.walkDistance.Text = "";
-            this.walkDistance.Visible = false;
             // 
             // walkEnd
             // 
@@ -214,7 +205,6 @@
             this.walkEnd.Size = new System.Drawing.Size(300, 27);
             this.walkEnd.TabIndex = 39;
             this.walkEnd.Text = "";
-            this.walkEnd.Visible = false;
             // 
             // button2
             // 
@@ -240,18 +230,22 @@
             this.walkView.TabIndex = 52;
             this.walkView.UseCompatibleStateImageBehavior = false;
             this.walkView.View = System.Windows.Forms.View.Details;
-            this.walkView.Visible = false;
             this.walkView.SelectedIndexChanged += new System.EventHandler(this.walkView_SelectedIndexChanged);
             // 
             // Itinerary
             // 
-            this.Itinerary.Text = "Itinerary";
+            this.Itinerary.Text = "Walking Itinerary";
             this.Itinerary.Width = 352;
             // 
             // Distance
             // 
             this.Distance.Text = "Distance";
             this.Distance.Width = 104;
+            // 
+            // Duration
+            // 
+            this.Duration.Text = "Duration";
+            this.Duration.Width = 87;
             // 
             // cycleView
             // 
@@ -267,23 +261,17 @@
             this.cycleView.TabIndex = 53;
             this.cycleView.UseCompatibleStateImageBehavior = false;
             this.cycleView.View = System.Windows.Forms.View.Details;
-            this.cycleView.Visible = false;
             this.cycleView.SelectedIndexChanged += new System.EventHandler(this.cycleView_SelectedIndexChanged);
             // 
             // columnHeader1
             // 
-            this.columnHeader1.Text = "Itinerary";
+            this.columnHeader1.Text = "Cycling Itinerary";
             this.columnHeader1.Width = 351;
             // 
             // columnHeader2
             // 
             this.columnHeader2.Text = "Distance";
             this.columnHeader2.Width = 104;
-            // 
-            // Duration
-            // 
-            this.Duration.Text = "Duration";
-            this.Duration.Width = 87;
             // 
             // columnHeader3
             // 

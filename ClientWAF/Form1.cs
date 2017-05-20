@@ -20,7 +20,7 @@ namespace ClientWAF
         public Form1()
         {
             InitializeComponent();
-            ics = new ItineraryServiceClient("wsHttp");
+            ics = new ItineraryServiceClient("netTcp");
         }
 
         private void button2_Click(object sender, EventArgs e)
@@ -28,7 +28,7 @@ namespace ClientWAF
             String src = textBox1.Text;
             String dest = textBox2.Text;
 
-            String res = ics.getItinerary("21 Rue Saint-Séverin 75005", "1 rue Antoine Dubois");
+            String res = ics.getItinerary(src,dest);
             response_processor(res);
             //walkStart.Text = res;
             //walkStart.Visible = true;
@@ -37,60 +37,48 @@ namespace ClientWAF
 
         private void response_processor(string s)
         {
-            dynamic json = JsonConvert.DeserializeObject(s);
+            JToken token = JObject.Parse(s);
 
-            string wStart = json.walk.start;
-            string wEnd = json.walk.end;
-            walkStart.Text = json.walk.start;
-            walkStart.Visible = true;
-            walkEnd.Text = json.walk.end;
-            walkEnd.Visible = true;
-            walkDuration.Text = "Duration : " + json.walk.duration.text;
-            walkDuration.Visible = true;
-            walkDistance.Text = "Distance : " + json.walk.distance.text;
-            walkDistance.Visible = true;
+            JToken walk = JObject.Parse(token.SelectToken("walk").ToString());
 
-            ListViewItem lv1 = new ListViewItem();
-            lv1.SubItems.Add(json.walk.steps);
-            walkView.Items.Add(lv1);
-            walkView.Visible = true;
+            walkStart.Text = (string) walk.SelectToken("start");
+            walkEnd.Text = (string)walk.SelectToken("end");
 
+            JToken wDistance = JObject.Parse(walk.SelectToken("distance").ToString());
+            JToken wDuration = JObject.Parse(walk.SelectToken("duration").ToString());
+            walkDuration.Text = "Duration : " + (string)wDuration.SelectToken("text");
+            walkDistance.Text = "Distance : " + (string)wDistance.SelectToken("text");
 
+            JArray wSteps = JArray.Parse(walk.SelectToken("steps").ToString());
+            add_to_list_view(wSteps, walkView);
 
-            string cStart = json.cycle.start;
-            string cEnd = json.cycle.end;
-            cycleStart.Text = json.cycle.start;
-            cycleStart.Visible = true;
-            cycleEnd.Text = json.cycle.end;
-            cycleEnd.Visible = true;
-            cycleDistance.Text = "Distance : " + json.cycle.distance.text;
-            cycleDistance.Visible = true;
-            cycleDuration.Text = "Duration : " + json.cycle.duration.text;
-            cycleDuration.Visible = true;
+            JToken cycle = JObject.Parse(token.SelectToken("cycle").ToString());
+            cycleStart.Text = (string)cycle.SelectToken("start");
+            cycleEnd.Text = (string)cycle.SelectToken("end");
+            JToken cDistance = JObject.Parse(cycle.SelectToken("distance").ToString());
+            JToken cDuration = JObject.Parse(cycle.SelectToken("duration").ToString());
+            cycleDistance.Text = "Distance : " + (string)cDistance.SelectToken("text");
+            cycleDuration.Text = "Duration : " + (string)cDuration.SelectToken("text");
 
-            walkPicture.Visible = true;
-            cyclePicture.Visible = true;
-
+            JArray cSteps = JArray.Parse(cycle.SelectToken("steps").ToString());
+            add_to_list_view(cSteps, cycleView);
         }
 
-        private void launch_browser(System.Windows.Forms.WebBrowser browser, string start, string end, string tmode)
+        private void add_to_list_view(JArray array, System.Windows.Forms.ListView view)
         {
-             /***
-              * https://www.google.com/maps/dir/?api=1&origin=&destination=&travelmode=bicycling
-              */
-
-            string url = "https://www.google.com/maps/dir/?api=1";
-
-            string origin = "&origin=" + start.Replace(' ', '+');
-            string destination = "&destination=" + end.Replace(' ', '+');
-            string mode = "&travelmode=" + tmode;
-
-            StringBuilder sbuilder = new StringBuilder();
-            sbuilder.Append(url).Append(origin).Append(destination).Append(mode);
-            
-            browser.Navigate(sbuilder.ToString());
+            for (int i = 0; i < array.Count; i++)
+            {
+                JToken current = JObject.Parse(array[i].ToString());
+                string dist = (string)JObject.Parse(current.SelectToken("distance").ToString()).SelectToken("text");
+                string dur = (string)JObject.Parse(current.SelectToken("duration").ToString()).SelectToken("text");
+                string info = (string)current.SelectToken("html_instructions");
+                ListViewItem lv1 = new ListViewItem(info);
+                lv1.SubItems.Add(dist);
+                lv1.SubItems.Add(dur);
+                view.Items.Add(lv1);
+            }
         }
-
+      
         private void Form1_Load(object sender, EventArgs e)
         {
 
@@ -106,4 +94,6 @@ namespace ClientWAF
 
         }
     }
+    
+    
 }
