@@ -29,12 +29,15 @@ namespace ServiceWCF
             jWalk.Add("end", velibAddress);
             jWalk.Add("distance", jsonWalk.routes[0].legs[0].distance);
             jWalk.Add("duration", jsonWalk.routes[0].legs[0].duration);
+            jWalk.Add("steps", jsonWalk.routes[0].legs[0].steps);
+
         
             JObject jCycle = new JObject();
             jCycle.Add("start", velibAddress);
             jCycle.Add("end", jsonCycle.routes[0].legs[0].end_address);
             jCycle.Add("distance", jsonCycle.routes[0].legs[0].distance);
             jCycle.Add("duration", jsonCycle.routes[0].legs[0].duration);
+            jCycle.Add("steps", jsonCycle.routes[0].legs[0].steps);
 
             JObject res = new JObject();
 
