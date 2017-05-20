@@ -267,18 +267,18 @@
   </wsdl:binding>
   <wsdl:service name="ItineraryService">
     <wsdl:port name="netTcp" binding="tns:netTcp">
-      <soap12:address location="net.tcp://localhost/Design_Time_Addresses/ServiceWCF/ItineraryService/" />
+      <soap12:address location="net.tcp://localhost/ServiceWCF/ItineraryService/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>net.tcp://localhost/Design_Time_Addresses/ServiceWCF/ItineraryService/</wsa10:Address>
+        <wsa10:Address>net.tcp://localhost/ServiceWCF/ItineraryService/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>
       </wsa10:EndpointReference>
     </wsdl:port>
     <wsdl:port name="wsHttp" binding="tns:wsHttp">
-      <soap12:address location="http://localhost:8733/Design_Time_Addresses/ServiceWCF/ItineraryService/" />
+      <soap12:address location="http://localhost:8733/ServiceWCF/ItineraryService/" />
       <wsa10:EndpointReference>
-        <wsa10:Address>http://localhost:8733/Design_Time_Addresses/ServiceWCF/ItineraryService/</wsa10:Address>
+        <wsa10:Address>http://localhost:8733/ServiceWCF/ItineraryService/</wsa10:Address>
         <Identity xmlns="http://schemas.xmlsoap.org/ws/2006/02/addressingidentity">
           <Dns>localhost</Dns>
         </Identity>

@@ -75,13 +75,13 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <None Include="Connected Services\VelibService\service.wsdl" />
-    <None Include="Connected Services\VelibService\service.xsd">
+    <None Include="Connected Services\VelibService\item.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Connected Services\VelibService\service1.xsd">
+    <None Include="Connected Services\VelibService\item1.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Connected Services\VelibService\ItineraryService.wsdl" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -103,6 +103,9 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Connected Services\VelibService\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Connected Services\VelibService\item.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Connected Services\VelibService\configuration91.svcinfo" />

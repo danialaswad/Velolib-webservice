@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="9ZVaX21Mn2weP+76VwtYHXCZFm0=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="g1v8IJyeJX+kTRDM2Ot5SAHxY50=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="netTcpBinding" name="netTcp">
       <properties>
@@ -245,10 +245,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="netTcp" contract="ServiceReference1.IItineraryService" bindingType="netTcpBinding" address="net.tcp://localhost/Design_Time_Addresses/ServiceWCF/ItineraryService/" bindingConfiguration="netTcp">
+    <endpoint name="netTcp" contract="VelibService.IItineraryService" bindingType="netTcpBinding" address="net.tcp://localhost/ServiceWCF/ItineraryService/" bindingConfiguration="netTcp">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>net.tcp://localhost/Design_Time_Addresses/ServiceWCF/ItineraryService/</serializedValue>
+          <serializedValue>net.tcp://localhost/ServiceWCF/ItineraryService/</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -260,7 +260,7 @@
           <serializedValue>netTcp</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ServiceReference1.IItineraryService</serializedValue>
+          <serializedValue>VelibService.IItineraryService</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
@@ -330,10 +330,10 @@
         </property>
       </properties>
     </endpoint>
-    <endpoint name="wsHttp" contract="ServiceReference1.IItineraryService" bindingType="wsHttpBinding" address="http://localhost:8733/Design_Time_Addresses/ServiceWCF/ItineraryService/" bindingConfiguration="wsHttp">
+    <endpoint name="wsHttp" contract="VelibService.IItineraryService" bindingType="wsHttpBinding" address="http://localhost:8733/ServiceWCF/ItineraryService/" bindingConfiguration="wsHttp">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>http://localhost:8733/Design_Time_Addresses/ServiceWCF/ItineraryService/</serializedValue>
+          <serializedValue>http://localhost:8733/ServiceWCF/ItineraryService/</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
@@ -345,7 +345,7 @@
           <serializedValue>wsHttp</serializedValue>
         </property>
         <property path="/contract" isComplexType="false" isExplicitlyDefined="true" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>ServiceReference1.IItineraryService</serializedValue>
+          <serializedValue>VelibService.IItineraryService</serializedValue>
         </property>
         <property path="/headers" isComplexType="true" isExplicitlyDefined="false" clrType="System.ServiceModel.Configuration.AddressHeaderCollectionElement, System.ServiceModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue>System.ServiceModel.Configuration.AddressHeaderCollectionElement</serializedValue>
