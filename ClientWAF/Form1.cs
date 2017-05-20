@@ -27,7 +27,8 @@ namespace ClientWAF
         {
             String src = textBox1.Text;
             String dest = textBox2.Text;
-
+            // src = 5 Avenue Anatole France, 75007 Paris
+            // dest = Avenue des Champs-Élysées, 75008 Paris
             String res = ics.getItinerary(src,dest);
             response_processor(res);
             //walkStart.Text = res;

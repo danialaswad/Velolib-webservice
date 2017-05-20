@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="a80a2dbb-1112-41d6-9633-63d7bdd3f221" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="16c94540-8b17-45dc-b230-3069a91de4a7" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -22,9 +22,9 @@
     <MetadataSource Address="net.tcp://localhost/ServiceWCF/ItineraryService/mex" Protocol="mex" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="8f48463b-e206-4279-94b5-a506b8277d96" SourceId="1" SourceUrl="net.tcp://localhost/ServiceWCF/ItineraryService/mex" />
-    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="b5473e7c-9419-4b86-9303-06c76cf9afb1" SourceId="1" SourceUrl="net.tcp://localhost/ServiceWCF/ItineraryService/mex" />
-    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="94b0983a-f0d4-4071-bd88-7e5b1fe3e62a" SourceId="1" SourceUrl="net.tcp://localhost/ServiceWCF/ItineraryService/mex" />
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="d38efa5b-7ccb-4a31-85b1-f473d2127317" SourceId="1" SourceUrl="net.tcp://localhost/ServiceWCF/ItineraryService/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="a69297f3-7dbf-4d14-ae31-5708381d1e25" SourceId="1" SourceUrl="net.tcp://localhost/ServiceWCF/ItineraryService/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="3ce87190-8971-4083-a539-9f61cdc6bee4" SourceId="1" SourceUrl="net.tcp://localhost/ServiceWCF/ItineraryService/mex" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

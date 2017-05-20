@@ -303,7 +303,7 @@
             this.Controls.Add(this.walkDistance);
             this.Controls.Add(this.walkEnd);
             this.Name = "Form1";
-            this.Text = "Velolib Itenary";
+            this.Text = "Velolib Itinerary";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.cyclePicture)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.walkPicture)).EndInit();
