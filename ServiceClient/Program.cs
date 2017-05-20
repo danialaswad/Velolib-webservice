@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
+using System.Text.RegularExpressions;
 
 namespace ServiceClient
 {
@@ -75,10 +76,14 @@ namespace ServiceClient
                 string dist = (string)JObject.Parse(current.SelectToken("distance").ToString()).SelectToken("text");
                 string dur = (string)JObject.Parse(current.SelectToken("duration").ToString()).SelectToken("text");
                 string info = (string)current.SelectToken("html_instructions");
-                Console.WriteLine("Instructions : " + info 
+                Console.WriteLine("Instructions : " + remove_tag(info) 
                     + " | Distance : " + dist 
                     + " | Duration : " + dur  );
             }
+        }
+        private string remove_tag(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
         }
     }
 }

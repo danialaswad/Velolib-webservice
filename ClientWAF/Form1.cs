@@ -1,15 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Newtonsoft.Json.Linq;
-using Newtonsoft.Json;
 using ClientWAF.VelibService;
+using System.Text.RegularExpressions;
 
 namespace ClientWAF
 {
@@ -27,6 +20,14 @@ namespace ClientWAF
         {
             String src = textBox1.Text;
             String dest = textBox2.Text;
+            if (src.Equals(""))
+            {
+                src = "5 Avenue Anatole France, 75007 Paris";
+            }
+            if (dest.Equals(""))
+            {
+                dest = "Avenue des Champs-Élysées, 75008 Paris";
+            }
             // src = 5 Avenue Anatole France, 75007 Paris
             // dest = Avenue des Champs-Élysées, 75008 Paris
             String res = ics.getItinerary(src,dest);
@@ -73,13 +74,17 @@ namespace ClientWAF
                 string dist = (string)JObject.Parse(current.SelectToken("distance").ToString()).SelectToken("text");
                 string dur = (string)JObject.Parse(current.SelectToken("duration").ToString()).SelectToken("text");
                 string info = (string)current.SelectToken("html_instructions");
-                ListViewItem lv1 = new ListViewItem(info);
+                ListViewItem lv1 = new ListViewItem(remove_tag(info));
                 lv1.SubItems.Add(dist);
                 lv1.SubItems.Add(dur);
                 view.Items.Add(lv1);
             }
         }
-      
+        private string remove_tag(string input)
+        {
+            return Regex.Replace(input, "<.*?>", String.Empty);
+        }
+
         private void Form1_Load(object sender, EventArgs e)
         {
 
