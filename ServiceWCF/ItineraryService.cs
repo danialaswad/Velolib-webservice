@@ -6,8 +6,8 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json;
-
-
+using System.Device.Location;
+using System.Globalization;
 
 namespace ServiceWCF
 {
@@ -88,7 +88,7 @@ namespace ServiceWCF
             return json;
         }
         
-
+        //Obtention d'itinéraire entre deux addresses selon un mode de déplacement avec l'API GMaps 
         public static string getMapsDirections(string origin, string destination, string mode)
         {
             string apiKey = "AIzaSyA-1i10h9yGuytFsM8uQN9kzfq-NaYVsHU";
@@ -111,19 +111,36 @@ namespace ServiceWCF
         }
 
 
-
+        //Récupération du code postal à partir d'une addresse complete
         static string parsePostalCode(string address)
         {
             Match match=Regex.Match(address, "(.*)([0-9][0-9][0-9][0-9][0-9])(.*)");
             return match.Groups[2].Value;
         }
 
-        //Calcul durée trajet entre origin et un point velib
 
-        static int getTimeToTravel(string origin, string velibAddress)
+        //Calcul la distance entre des coordonnees d'origine et des coordonnees de velib
+        static double getDistance(GeoCoordinate originCoord, string velibLongStr, string velibLatStr)
         {
-            string apiKey = "AIzaSyCMl0p5Kfa992OF5n0B89hL8l9KU-LUAQg";
-            WebRequest request = WebRequest.Create("https://maps.googleapis.com/maps/api/distancematrix/xml?units=metric&origins=" + origin + "&destinations=" + velibAddress + "&mode=bicycling&key=" + apiKey);
+            //On cree des coordonnées à partir de la long et lat du velib
+            double velibLat = 0;
+            double velibLong = 0;
+            velibLong=double.Parse(velibLongStr, CultureInfo.InvariantCulture);
+            velibLat=double.Parse(velibLatStr, CultureInfo.InvariantCulture);
+
+            GeoCoordinate velibCoord = new GeoCoordinate(velibLat, velibLong);
+
+            return originCoord.GetDistanceTo(velibCoord);
+
+        }
+
+        //Fonction qui donne des coordonnees (latitude et longitude) a partir d'une addresse
+        static GeoCoordinate getAddressCoordinate(string origin)
+        {
+            //Tout d'abord on récupère la latitude et longitude de l'addresse d'origine
+            string apiKey = "AIzaSyA6o9xPIDlOd8oAjTMyrwO2SpkHbUGtPX0";
+            //On utilise l'API geocoding
+            WebRequest request = WebRequest.Create("https://maps.googleapis.com/maps/api/geocode/xml?address=" + origin + "&key=" + apiKey);
             // Get Response from the Service 
             WebResponse response = request.GetResponse();
 
@@ -133,28 +150,33 @@ namespace ServiceWCF
             // Open the stream using a StreamReader for easy access and put it into a string
             StreamReader reader = new StreamReader(dataStream); // Read the content.
             string responseFromServer = reader.ReadToEnd(); // Put it in a String 
-            XmlDocument xdoc = new XmlDocument();
-            xdoc.LoadXml(responseFromServer);
 
-            XmlNodeList elemList = xdoc.GetElementsByTagName("duration");
-            
-            int time = 0;
-            int.TryParse(elemList[0].SelectSingleNode("value").InnerText, out time);
+            // Parse the response and put the entries in XmlNodeList 
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(responseFromServer);
+            XmlNodeList elemList = doc.GetElementsByTagName("location");
+            double originLat = 0;
+            double originLong = 0;
+            originLong=double.Parse(elemList[0].SelectSingleNode("lng").InnerText, CultureInfo.InvariantCulture);
+            originLat=double.Parse(elemList[0].SelectSingleNode("lat").InnerText, CultureInfo.InvariantCulture);
+            GeoCoordinate originCoord = new GeoCoordinate(originLat, originLong);
 
-            reader.Close();
-            response.Close();
-
-            return time;
+            return originCoord;
         }
 
         
 
-
+        //Fonction qui trouve le vélib le plus proche de l'adresse origin
         static String getClosestVelib(string origin)
         {
-            int shortestDistance = -1;
+            double shortestDistance = -1;
             string velibAddress = "";
             string postalCode = parsePostalCode(origin);
+
+            //Coordonnées de l'addresse de départ
+            GeoCoordinate originCoord = getAddressCoordinate(origin);
+            
+
             // Create a request for the URL.
             WebRequest request = WebRequest.Create("http://www.velib.paris/service/carto");
 
@@ -177,62 +199,58 @@ namespace ServiceWCF
             // browse the XmlNodeList
             for (int i = 0; i < elemList.Count; i++)
             {
-                //Test if the substring is in the name of the station  
+                //Test if the velib station is in the same postal area  
                 try
                 {
                 
-
-                    if (postalCode.Equals("") || elemList[i].Attributes["fullAddress"].Value.Contains(postalCode))
+                    //On calcule la distance avec les velibs pour trouver le velib le plus proche
+                    try
                     {
-                        //TODO vérifier si des velibs sont dispos, sinon ignorer
-                        //On calcule la distance avec les velibs pour trouver le velib le plus proche
-                        try
+                        double newDistance = getDistance(originCoord, elemList[i].Attributes["lng"].Value, elemList[i].Attributes["lat"].Value);
+                     
+                        if (shortestDistance == -1 || shortestDistance > newDistance)
                         {
-                            int newDistance = getTimeToTravel(origin, elemList[i].Attributes["fullAddress"].Value);
-                            if (shortestDistance == -1 || shortestDistance > newDistance)
-                            {
-                                //On récupère le nombre de vélos dispos
-                                //Get the number of the Station 
-                                String numPoint = elemList[i].Attributes["number"].Value;
+                            //On récupère le nombre de vélos dispos
+                            //Get the number of the Station 
+                            String numPoint = elemList[i].Attributes["number"].Value;
 
-                                // Create a request for the URL.
-                                WebRequest request_for_data = WebRequest.Create("http://www.velib.paris/service/stationdetails/" + numPoint);
+                            // Create a request for the URL.
+                            WebRequest request_for_data = WebRequest.Create("http://www.velib.paris/service/stationdetails/" + numPoint);
 
-                                // Get Response 
-                                WebResponse response_for_data = request_for_data.GetResponse();
+                            // Get Response 
+                            WebResponse response_for_data = request_for_data.GetResponse();
 
-                                // Open the stream using a StreamReader for easy access and put it into a string
-                                Stream dataStream_for_data = response_for_data.GetResponseStream();
-                                StreamReader reader_for_data = new StreamReader(dataStream_for_data); // Read the content.
-                                string responseFromServer_for_data = reader_for_data.ReadToEnd(); // Put it in a String
+                            // Open the stream using a StreamReader for easy access and put it into a string
+                            Stream dataStream_for_data = response_for_data.GetResponseStream();
+                            StreamReader reader_for_data = new StreamReader(dataStream_for_data); // Read the content.
+                            string responseFromServer_for_data = reader_for_data.ReadToEnd(); // Put it in a String
 
-                                // Parse the response and put the entries in XmlNodeList 
-                                XmlDocument doc_for_data = new XmlDocument();
-                                doc_for_data.LoadXml(responseFromServer_for_data);
-                                XmlNodeList elemList_for_data = doc_for_data.GetElementsByTagName("available");
+                            // Parse the response and put the entries in XmlNodeList 
+                            XmlDocument doc_for_data = new XmlDocument();
+                            doc_for_data.LoadXml(responseFromServer_for_data);
+                            XmlNodeList elemList_for_data = doc_for_data.GetElementsByTagName("available");
 
-                                // Display the result 
+                            // Display the result 
                                 
-                                reader_for_data.Close();
-                                response_for_data.Close();
-                                int availableBikes = 0;
-                                int.TryParse(elemList_for_data[0].FirstChild.Value, out availableBikes) ;
+                            reader_for_data.Close();
+                            response_for_data.Close();
+                            int availableBikes = 0;
+                            int.TryParse(elemList_for_data[0].FirstChild.Value, out availableBikes) ;
 
-                                Debug.WriteLine("Number of available bikes: " + availableBikes);
-                                //S'il y a des vélos dispos, ok, sinon on ignore cette station
-                                if (availableBikes != 0)
-                                {
-                                    velibAddress = elemList[i].Attributes["fullAddress"].Value;
-                                    shortestDistance = newDistance;
-                                }
+                            Debug.WriteLine("Number of available bikes: " + availableBikes);
+                            //S'il y a des vélos dispos, ok, sinon on ignore cette station
+                            if (availableBikes != 0)
+                            {
+                                velibAddress = elemList[i].Attributes["fullAddress"].Value;
+                                shortestDistance = newDistance;
                             }
                         }
-                        catch(NullReferenceException e)
-                        {
-                        
-                        }
-                   
                     }
+                    catch(NullReferenceException e)
+                    {
+                        
+                    }
+                   
                 }
                 catch (ArgumentException e)
                 {
@@ -242,6 +260,8 @@ namespace ServiceWCF
             // Clean up the streams and the response.
             reader.Close();
             response.Close();
+        
+
             return velibAddress;
         }
 
