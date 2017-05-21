@@ -12,9 +12,10 @@ Ensuite on utilise le service Directions pour obtenir les deux itinéraires décri
 Lancement du service et client:
 Exécuter le script LaunchConsoleClient.bat pour exécuter le client Console
 Exécuter le script LaunchWAFClient.bat pour exécuter le client WAF
+Si cela ne fonctionne pas essayez de lancer les scripts en mode administrateur
 
 
-Si les scripts ne fonctionnent pas:
-Ouvrir le projet VS fourni avec Visual Studio
+Si les scripts ne fonctionnent toujours pas:
+Ouvrir le projet VS fourni avec Visual Studio en mode administrateur
 Lancer le projet ClientWAF pour lancer le client WAF en netTcpBinding
 Lancer le projet ClientConsole pour lancer le client Console en wsHttpBinding
