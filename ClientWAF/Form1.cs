@@ -28,6 +28,7 @@ namespace ClientWAF
             {
                 dest = "Avenue des Champs-Élysées, 75008 Paris";
             }
+
             // src = 5 Avenue Anatole France, 75007 Paris
             // dest = Avenue des Champs-Élysées, 75008 Paris
             String res = ics.getItinerary(src,dest);
@@ -68,6 +69,7 @@ namespace ClientWAF
 
         private void add_to_list_view(JArray array, System.Windows.Forms.ListView view)
         {
+            view.Items.Clear();
             for (int i = 0; i < array.Count; i++)
             {
                 JToken current = JObject.Parse(array[i].ToString());
@@ -99,6 +101,7 @@ namespace ClientWAF
         {
 
         }
+        
     }
     
     
