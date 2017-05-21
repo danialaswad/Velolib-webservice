@@ -14,7 +14,7 @@ namespace ServiceClient
     {
         static void Main(string[] args)
         {
-            ItineraryServiceClient isc = new ItineraryServiceClient("netTcp");
+            ItineraryServiceClient isc = new ItineraryServiceClient("wsHttp");
             Program p = new Program();
             Console.WriteLine("Welcome to Velib itinerary Service");
             Console.Write("Enter origin [default address : 5 Avenue Anatole France, 75007 Paris ] : ");

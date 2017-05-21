@@ -111,12 +111,6 @@ namespace ServiceWCF
         }
 
 
-        //Récupération du code postal à partir d'une addresse complete
-        static string parsePostalCode(string address)
-        {
-            Match match=Regex.Match(address, "(.*)([0-9][0-9][0-9][0-9][0-9])(.*)");
-            return match.Groups[2].Value;
-        }
 
 
         //Calcul la distance entre des coordonnees d'origine et des coordonnees de velib
@@ -171,7 +165,6 @@ namespace ServiceWCF
         {
             double shortestDistance = -1;
             string velibAddress = "";
-            string postalCode = parsePostalCode(origin);
 
             //Coordonnées de l'addresse de départ
             GeoCoordinate originCoord = getAddressCoordinate(origin);
@@ -199,7 +192,6 @@ namespace ServiceWCF
             // browse the XmlNodeList
             for (int i = 0; i < elemList.Count; i++)
             {
-                //Test if the velib station is in the same postal area  
                 try
                 {
                 
