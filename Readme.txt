@@ -12,6 +12,11 @@ Ensuite on utilise le service Directions pour obtenir les deux itinéraires décri
 Lancement du service et client:
 Exécuter le script LaunchConsoleClient.bat pour exécuter le client Console
 Exécuter le script LaunchWAFClient.bat pour exécuter le client WAF
+
+Si vous avez une System.IO.FileLoadException au lancement du script, Windows a bloqué automatiquement des fichiers et il faut les débloquer en faisaint clic droit -> Propriétés -> Cocher débloquer. Il faut le faire pour les fichiers suivants:
+-WcfSvcHost.exe
+-ServiceWCF\bin\Release\ServiceWCF.dll
+
 Si cela ne fonctionne pas essayez de lancer les scripts en mode administrateur
 
 
