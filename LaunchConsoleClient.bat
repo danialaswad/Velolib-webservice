@@ -1,0 +1,1 @@
+WcfSvcHost.exe /service:ServiceWCF/bin/Debug/ServiceWCF.dll /config:ServiceWCF/bin/Debug/ServiceWCF.dll.config /client:ServiceClient/bin/Debug/ServiceClient.exe
