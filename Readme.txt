@@ -10,3 +10,6 @@ Ensuite on utilise le service Directions pour obtenir les deux itinéraires décri
 
 
 Lancement du service et client:
+Ouvrir le projet VS fourni avec Visual Studio
+Lancer le projet ClientWAF pour lancer le client WAF en netTcpBinding
+Lancer le projet ClientConsole pour lancer le client Console en wsHttpBinding
